@@ -143,7 +143,7 @@ System.out.println(1 > 3 ? "1大于3" : "1小于3");//1小于3
 
 ### 八大基本数据类型
 
-![1597752634927](img/1597752634927.png)
+![1597752634927](./img/1597752634927.png)
 
 ![1597752700579](img/1597752700579.png)
 
@@ -958,10 +958,18 @@ Arrays
 		可变参数
 		获得的List数组长度不可变
 
-Collections
-	集合的工具类，封装了Set、List、Map操作的工具方法。
-如拷贝、排序、搜索、比较大小等
-	具体看API
+### Collections
+
+集合的工具类，封装了Set、List、Map操作的工具方法。如拷贝、排序、搜索、比较大小等
+
+- emptyList()静态方法返回一个不可变的空集合
+  - 返回的List是Collections类的一个静态内部类
+  - 继承AbstractList后并没有实现add()、remove()等方法
+  - 返回的List不能增删元素
+- ==调用者不需要校验返回值是否为null==，建议使用这个方法返回可能为空的List
+- emptySet()、emptyMap()方法同理
+
+
 
 Map迭代遍历
 	map转为所有Key的集合
@@ -995,16 +1003,21 @@ Map迭代遍历
 ​		红黑树实现
 ​		可以对集合元素排序
 ​		必须保证TreeSet集合中的元素对象是相同的数据类型，否则报错
-​		Comparable接口
+
+### Comparable接口
+
 ​			缺省时TreeSet中的元素会采用自然排序(从小到大)，此时要求元素对象必须实现util包中的Comparable接口
 ​				JDK自带的类基本都实现了该接口，
 如八大包装类和String
 ​			TreeSet会调用元素的compareTo方法来比较元素的大小关系,然后将集合元素按照升序排列
-​		Comparator接口
+
+### Comparator接口
+
 （比较器）
-​			覆盖compare方法来自定义排序规则
-​			方法都是default修饰，所以不需全覆盖
-​			new  TreeSet对象时就传入该自定义规则
+
+- 覆盖compare方法来自定义排序规则
+- 方法都是default修饰，所以不需全覆盖
+- new  TreeSet对象时就传入该自定义规则
 
 ### 集合元素迭代（遍历）
 
@@ -1192,20 +1205,14 @@ Win：使用双斜杠\\表示分割路径，因为java中\表示转义
 **基本命名规范**：使用有意义的英文单词，多个单词用驼峰表示法.
 
 - 包名：字母全部小写 , 公司域名倒着写
-
 - 接口名：首字母大写并且一般都要以i的大写字母开头，表示interface
-
 - 接口实现类: 习惯性使用 Impl 结尾
-
 - 类名：首字母要大写，遵循驼峰表示法。
-
 - 方法名：首字母小写。多个单词时遵循驼峰表示法。
-
 - 变量名：首字母小写。遵循驼峰表示法。
-
 - 常量名：全大写，力求语义清晰，多个单词时通过下划线分割单词。
 
-  
+
 
 ----
 
@@ -1400,7 +1407,9 @@ TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc),n
 
 
 
-## 数据库概述
+## 数据库
+
+### 概述
 
 - 关系型数据库DBMS —— **表**关系，
   - Oracle：移植性好，稳定，贵
@@ -1411,15 +1420,6 @@ TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc),n
   - ORDBMS：面向对象数据库技术。
   - NoSQL  not only sql：结构化数据库技术。
 
-### SQL组成
-
-- ==数据查询语言（DQL）==：从表获取数据，确定数据怎么给出（==SELECT==、 WHERE，ORDER BY，GROUP BY和HAVING），数据检索语句，通常配合其他SQL语句使用
-- ==数据操作语言（DML）==：对表中行的增删改（ INSERT，UPDATE和DELETE），也称动作语言
-- 事务处理语言（TPL）：确保被DML语句影响的表的所有行及时更新（BEGIN TRANSACTION，COMMIT和ROLLBACK）
-- 数据控制语言（DCL）：通过GRANT或REVOKE获得许可，确定单个用户和用户组对数据库对象的访问。某些RDBMS可用GRANT或REVOKE控制对表单个列的访问
-- ==数据定义语言（DDL）==：创建、删除表（CREAT TABLE 或 DROP TABLE），动作查询的一部分
-- 指针控制语言（CCL）：用于对一个或多个表单独行的操作（DECLARE CURSOR，FETCH INTO和UPDATE WHERE CURRENT）
-
 ### 数据库分类
 
 - 系统数据库：不可更改
@@ -1428,6 +1428,19 @@ TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc),n
 ![1597749742897](img/1597749742897.png)
 
 <center>数据库对象、数据库、数据库服务器关系 </center>
+
+
+### SQL组成
+
+- ==数据查询语言（DQL）==：从表获取数据，确定数据怎么给出（==SELECT==、 WHERE，ORDER BY，GROUP BY 和 HAVING），数据检索语句，通常配合其他SQL语句使用
+- ==数据定义语言（DDL）==：创建、删除表（CREAT TABLE 或 DROP TABLE），动作查询的一部分
+- ==数据操作语言（DML）==：对表中行的增删改（ INSERT，UPDATE 和 DELETE），也称动作语言
+- 事务处理语言（TCL）：确保被DML语句影响的表的所有行及时更新（BEGIN TRANSACTION，COMMIT 和 ROLLBACK）
+- 数据控制语言（DCL）：通过 GRANT 或 REVOKE 获得许可，确定单个用户和用户组对数据库对象的访问。某些 RDBMS 可用 GRANT 或REVOKE控制对表单个列的访问
+- 指针控制语言（CCL）：用于对一个或多个表单独行的操作（DECLARE CURSOR，FETCH INTO 和 UPDATE WHERE CURRENT）
+
+
+
 ----
 
 
@@ -1461,6 +1474,18 @@ ORM： Oject Reraltional Mapping : 对象表的映射，表示数据库表和Jav
 - 对象——表的行（记录）
 - 属性——表的列（字段）
 
+### 三范式
+
+- 数据库表的每一列都是不可分割的基本数据项，==一个列中只能存储一个值==（必须遵循）
+- 数据库表中的每个实例或行必须可以被主键唯一区分（根据需求遵循）
+  - 遵循：根据主键查询，设置主键，自动建立索引，查询速度快
+  - 不遵循：没有根据主键查询的需求
+- 一个数据库表中不包含已在其它表中已包含的==非主键==段信息
+  - 遵循：包含的其他表非主键字段经常修改
+  - 不遵循：包含的其他表非主键字段极少修改（查询的性能稍好）
+
+
+
 ### 存储引擎
 
 使用不同的存储机制、索引技巧、锁定水平并且最终提供不同的功能和能力
@@ -1468,7 +1493,7 @@ ORM： Oject Reraltional Mapping : 对象表的映射，表示数据库表和Jav
 - MyISAM：无外键，无事务，插入查询较快
 - ==InnoDB：支持事务、外键，支持行级锁定，性能较低，另外具有提交、回滚和崩溃恢复能力的事务安全==
 
-### MySQL操作
+### MySQL基本操作
 
 - net start（开启服务），如：net start MySQL
 
@@ -1582,10 +1607,16 @@ DELETE FROM 表名 WHERE [条件];
 FROM表名子句 后面写WHERE条件语句进行筛选
 
 ```mysql
-SELECT 列名 FROM 表名 [WHERE]
+SELECT [DISTINCT] * | 字段 [别名] [, 字段 [别名]]
+FROM 表名称 [别名]
+[WHERE 条件(S)]
+[ORDER BY 字段 [ASC|DESC] [, 字段 [ASC|DESC], …]];
 ```
 
-#### 普通查询
+#### 全列查询和投影查询
+
+- 全列：*
+- 投影：查询部分列
 
 ##### 去重查询
 
@@ -1634,6 +1665,19 @@ number 型数据可用加减乘除创建表达式，date 型数据==只可使用
 - 括号高于运算符
 
 #### WHERE条件过滤
+
+#### 注意事项
+
+- 字符串和日期要用单引号扩起来
+- 数字类型直接书写
+- 字符串是大小写不敏感的，日期值是格式大小写敏感的
+- 字符串若要大小写敏感，需要添加 binary 关键字
+- 空值
+  - 空值是指不可用、未分配的值，也就是没有值
+  - 空值不等于零或空格，也不表示空字符串
+  - 任意类型都可以支持空值，也就是说任何类型的字段都可以允许空值作为值的存在
+  - 包括空值的任何算术表达式都等于空
+  - 使用函数 IFNULL(expr1, expr2)，若 expr1 不是 NULL，IFNULL() 返回 expr1，否则它返回 expr2
 
 ##### 比较运算
 
@@ -1803,11 +1847,21 @@ conn.close();
 域名倒写.项目模块名.组件
 
 - 创建项目
+
 - 导入数据库驱动包
+
+  
+
+  - ==带不带-bin都是一样的驱动包，没有区别==
+
 - 创建表和模型包以及模型对象（domain/Xxx）
+
 - 创建DAQ包和DAO接口，设计DAO接口方法（dao/lXxxDAO）
+
 - 创建DAQ实现包，实现DAQ接口（dao.impl/XxxDAQlmpl）
+
 - 创建测试目录，生成测试类和方法（test/XxxDAOTest）
+
 - 书写实现，实现一个方法测试一个方法并且测试通过
 
 ### 预编译语句
@@ -1931,7 +1985,7 @@ JVM中表示字节码文件的对象。Class没有公共的构造器，都是在
 
 Class实例位置https://www.cnblogs.com/xy-nb/p/6773051.html
 
-![1597288417146](img/1597288417146.png)
+
 
 ### 获取Class对象
 
@@ -1959,7 +2013,9 @@ System.out.println(int[][].class);// class [[I
 获取构造器方法==带Declared表示忽略权限==，包括私有的也可以获取到
 查看源码可以发现，==Constructor，Field，Method是AccessibleObject的子类==，因为这三种成员都是可以被访问private修饰符修饰的构造器
 
-![1597323788639](../Java%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/img/1597323788639.png)
+![1598925180901](img/1598925180901.png)
+
+
 
 ### 获取构造器
 
@@ -2072,6 +2128,16 @@ Boolean类型字段的getter、setter方法是以 is 开头
 
 
 ## LomBok使用
+
+### 安装插件
+
+![1598926405585](img/1598926405585.png)
+
+### 导入jar包
+
+![1598926422848](img/1598926422848.png)
+
+### 示例
 
 ```java
 //getter、setter方法
@@ -2863,6 +2929,18 @@ public static void sayServer(){
 
 
 
+### Tomcat默认启动的时候创建了几个Servlet
+
+通过查看tomcat的web.xml文件可以知道创建了2个servlet对象
+
+![image-20200903154107370](img/image-20200903154107370.png)
+
+![image-20200903154012591](img/image-20200903154012591.png)
+
+
+
+
+
 ### Web项目结构
 
 
@@ -3248,6 +3326,12 @@ for (Map.Entry<String, String[]> entry : entries) {
 
 ## Web组件交互
 
+### JavaWeb三大组件
+
+- Servlet
+- Filter过滤器
+- Listener监听器
+
 ### 跳转和数据共享
 
 - 责任分离，分开JSP和Servlet代码
@@ -3475,9 +3559,126 @@ web最佳开发模式
 
 ## 分页查询
 
+分页查询则是在页面上将本来很多的数据分段显示，每页显示用户自定义的行数。可提高用户体验度，同时减少一次性加载，内存溢出风险
+
+### 分页
+
+- 假分页
+  - 一次性查询所有数据存入内存，翻页从内存中获取数据。
+  - 优点：实现简单，性能高
+  - 缺点：容易造成内存溢出
+- 真分页
+  - 每次翻页从数据库中查询数据
+  - 优点：不容易造成内存溢出
+  - 缺点：实现复杂，性能相对低
+
+### 分页组成
+
+- 当前页的结果集数据
+- 分页条信息
+
+### 分页数据源
+
+- 用户输入
+
+  - currentPage（int）
+    - 当前页，跳转到第几页，int 类型，设置默认值，比如 1
+  - pageSize（int）
+    - 每页最多多少条数据，int 类型，设置默认值，比如 10
+
+- SQL 查询
+
+  - totalCount/rows（int）： 数据总条数
+
+    ```mysql
+    SELECT COUNT(*) FROM 表名 [WHERE 条]
+    ```
+
+  - data/list（List）： 每一页的结果集数据
+
+    ```mysql
+    -- 第一个？：(currentPage - 1) * pageSize
+    -- 第二个？：pageSize
+    SELECT * FROM 表名 [WHERE 条件] LIMIT  ? , ?
+    ```
+
+- 程序计算
+
+  - totalPage（int）： 总页数/末页
+
+    ```java
+    this.totalPage = this.totalCount % this.pageSize ==0 ? this.totalCount / this.pageSize : this.totalCount / this.pageSize + 1;
+    ```
+
+  - prevPage（int）： 上一页
+
+    ```java
+    this.prevPage = currentPage - 1 >= 1 ? currentPage - 1 : 1;
+    this.prevPage = Math.max(this.currentPage - 1, 1);//简化写法
+    ```
+
+  - nextPage（int）： 下一页
+
+    ```java
+    this.nextPage = this.currentPage + 1 <= this.totalPage ? this.currentPage + 1 : this.totalPage;
+    this.nextPage = Math.min(this.currentPage + 1, this.totalPage);//简化写法
+    ```
+
+### 封装两个类，将页面结果、分页参数封装起来
+
+#### 封装页面结果
+
+```java
+@Getter
+public class PageResult<T> {
+    //用户输入
+    private int currentPage;
+    private int pageSize;
+    //sql查询
+    private int totalCount;
+    private List<T> data;
+    //程序计算
+    private int prevPage;
+    private int nextPage;
+    private int totalPage;
+
+    public PageResult(int currentPage, int pageSize, int totalCount, List<T> data) {
+        this.currentPage = currentPage;
+        this.pageSize = pageSize;
+        this.totalCount = totalCount;
+        this.data = data;
+        
+        //程序计算,注意顺序，先计算totalPage
+        this.totalPage = this.totalCount % this.pageSize == 0 ? this.totalCount / this.pageSize : this.totalCount / this.pageSize + 1;
+        this.prevPage = Math.max(this.currentPage - 1,1);
+        this.nextPage = Math.min(this.currentPage + 1,this.totalPage);
+    }
+}
+
+```
+
+#### 封装分页查询需要的两个请求传入的分页参数
+
+```java
+@Getter
+@Setter
+public class QueryObiect {
+    private Integer currentPage = 1;
+    private Integer pageSize = 3;
+    /**
+     * @return 分页查询第一个问号的值
+     */
+    public int getStart(){
+        return (currentPage - 1) * pageSize;
+    }
+}
+```
 
 
 
+![image-20200903090142744](img/image-20200903090142744.png)
+
+<center>分页查询需要的数据以及来源</center>
 
 
 
@@ -3487,45 +3688,353 @@ web最佳开发模式
 
 ## 过滤查询
 
+### 动态SQL语句
 
+- if 标签
 
+  ```mysql
+  <if test="boolean 表达式"></if>
+  ```
 
+  - boolean 表达式：
+    可以写类似这样（productName != null）booolean 表达式。
+    表达式中可以使用逻辑运算符，使用小写 and，or，但不可用 &&，||
 
+  - MyBatis转义符
 
+    ![image-20200901190106635](img/image-20200901190106635.png)
 
+- where 标签
 
+  ```mysql
+  <where>条件语句</where>
+  ```
+
+  - 若查询条件语句没有 WHERE 关键字，则自动在查询条件语句之前插入 WHERE；
+  - 若查询条件语句以 "AND" 或 "OR" 开头，则把第一个 AND 或 OR 使用 WHERE 关键字替换
+
+### mapper.xml设置
+
+```xml
+<sql id="where_sql">
+    <where>
+        <if test="studentName != null">
+        AND name LIKE concat('%',#{studentName},'%')
+        </if>
+        <if test="minScore != null">
+            AND score &gt;= #{minScore}
+        </if>
+        <if test="maxScore != null">
+            AND score &lt;= #{maxScore}
+        </if>
+    </where>
+</sql>
+<select id="queryForCount" resultType="int">
+    SELECT COUNT(*) FROM t_student
+    <include refid="where_sql"/>
+</select>
+<select id="queryForList" resultType="Students">
+    SELECT * FROM t_student
+    <include refid="where_sql"/>
+    LIMIT #{start},#{pageSize}
+</select>
+```
+
+### 增加一个类封装查询条件
+
+```java
+@Getter
+@Setter
+public class StudentsQueryObiect extends QueryObiect{
+    private String studentName;
+    private BigDecimal minScore;
+    private BigDecimal maxScore;
+}
+```
+
+---
+
+### 分页过滤查询项目结构
+
+![image-20200902170802071](img/image-20200902170802071.png)
 
 
 
 ---
 
-# 异常收集
 
-## class对象
 
-- java.lang.NoSuchMethodException：无方法异常：class对象调用getConstructor方法，匹配不到指定的参数列表构造器
-- java.lang.IllegalAccessException：非法访问异常：class对象获取对象构造器后，调用getDeclaredConstructor方法使用对象的私有化构造器创建对象前，但没有先调用setAccessible(true)设置该私有构造器可以访问
-- java.lang.I1legalArgumentException：参数异常
+## 过滤器&监听器
 
-## Tomcat
+### 用户注销
 
-- java.net.BindException：端口被占用
+- 清除 session 中的用户信息
+
+### 记住用户
 
 
 
-## MyBatis
 
-![1597505709276](img\1597505709276.png)
 
-![1597505765386](img/1597505765386.png)
+### 验证码
 
 
 
----
+
+
+### 过滤器Filter
+
+- Java Web 三大组件之一
+- 可以改变 request 和修改 response
+- 但不能产生 response
+- 可在 request 到达 Servlet 之前预处理 request，也可以在 response 离开 Servlet 后处理 response
+- Filter 其实是一个 "Servlet chaining"（Servlet 链）
+
+![image-20200903114009109](img/image-20200903114009109.png)
+
+#### 过滤器使用场景
+
+- 字符编码处理
+- 登录校验
+- 论坛敏感字过滤
+- 前端框架的分发器
+
+#### Filter使用
+
+```java
+
+```
+
+![image-20200903114901029](img/image-20200903114901029.png)
+
+<center>实现Filter接口</center>
+
+
+
+### 过滤器链
+
+- web.xml配置的时候，执行顺序就是配置的先后顺序
+- 如果是注解配置，看类名首字母先后顺序
+
+![image-20200903144800774](img/image-20200903144800774.png)
+
+
+
+
+
+### 过滤方式
+
+![image-20200903152846969](img/image-20200903152846969.png)
+
+
+
+### 字符编码过滤器
+
+解决Servlet中的编码处理代码问题，编写CharacterEncodingFilter
+
+ ```xml
+<filter>
+<filter-name>characterEncodingFilter</filter-name>
+<filter-class>cn.wolfcode.web.filter.CharacterEncodingFilter</filter-class>
+<!-- 设置过滤器的字符编码-->
+<init-param>
+<param-name>encoding</param-name>
+<param-value>UTF-8</param-value>
+</init-param>
+<!--当前过滤器字符编码需要被覆盖时设置force值为true-->
+<init-param>
+<param-name>force</param-name>
+<param-value>true</param-value>
+</init-param>
+</filter>
+<filter-mapping>
+<filter-name>characterEncodingFilter</filter-name>
+<url-pattern>/*</url-pattern>
+</filter-mapping>
+ ```
+
+
+
+### 登录校验过滤器
+
+#### 配置匿名访问资源
+
+- 指定 CheckLoginFilter 不对哪些资源做登录校验处理
+
+  ```xml
+  <filter>
+  <filter-name>checkLoginFilter</filter-name>
+  <filter-class>cn.wolfcode.web.filter.CheckLoginFilter</filter-class>
+  <!--配置可以匿名访问的资源-->
+  <init-param>
+  <param-name>unCheckUri</param-name>
+  <param-value>/login.jsp;/login;/randomCode</param-value>
+  </init-param>
+  </filter>
+  <filter-mapping>
+  <filter-name>checkLoginFilter</filter-name>
+  <!--对所有访问都做过滤-->
+  <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  ```
+
+  ```java
+  public class CheckLoginFilter implements Filter {
+      private List<String> unCheckUriList;
+      @Override
+      public void init(FilterConfig filterConfig) throws ServletException {
+          //获取匿名访问的资源名
+          this.unCheckUriList = Arrays.asList(filterConfig.getInitParameter("unCheckUri").split(";"));
+      }
+      @Override
+      public void doFilter(ServletRequest servletRequest, ServletResponse
+              servletResponse, FilterChain filterChain) throws IOException, ServletException {
+          HttpServletRequest req = ((HttpServletRequest) servletRequest);
+          HttpServletResponse resp = ((HttpServletResponse) servletResponse);
+          Object obj = req.getSession().getAttribute("USER_IN_SESSION");
+          // 获取请求的资源路径
+          String uri = req.getRequestURI();
+          // 没有登录且访问的不是匿名资源，重定向到登录页面
+          //contains方法作用：是否包含某个值，返回boolean
+          if(obj == null && !unCheckUriList.contains(uri)) {
+              resp.sendRedirect("/login.jsp");
+              return;
+          }
+          // 登录过，放行访问
+          filterChain.doFilter(req, resp);
+      }
+      @Override
+      public void destroy() {
+      }
+  }
+  ```
+
+  
+
+- 指定 CheckLoginFilter 对check 路径下的资源才做登录校验处理
+
+  - 需要对servlet访问路径增加 /check
+
+  ```xml
+  <filter>
+  <filter-name>checkLoginFilter</filter-name>
+  <filter-class>cn.wolfcode.web.filter.CheckLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  <filter-name>checkLoginFilter</filter-name>
+  <!-- 只有在 check 路径下的资源访问会做登录的校验 -->
+  <url-pattern>/check/*</url-pattern>
+  </filter-mapping>
+  ```
+
+  
+
+### 监听器Listener
+
+
+
+
 
 
 
 # 小知识
+
+### tomcat
+
+#### tomcat端口号隐藏
+
+![image-20200902170108743](img/image-20200902170108743.png)
+
+![image-20200902170154354](img/image-20200902170154354.png)
+
+#### tomcat控制台乱码解决
+
+![image-20200902170021010](img/image-20200902170021010.png)
+
+
+
+
+
+
+
+### 配置文件头
+
+#### mybatis-config.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"/>
+    <typeAliases>
+        <package name="cn.baidu.pmis.domain"/>
+    </typeAliases>
+    <environments default="dev">
+        <environment id="dev">
+      <transactionManager type="事务管理器"/>
+      <dataSource type="数据源类型">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="映射文件路径"/>
+  </mappers>
+</configuration>
+```
+
+#### Mapper.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper文件全限定名">
+    <select id="queryForCount">
+        SELECT COUNT(*) FROM t_student;
+    </select>
+</mapper>
+```
+
+
+
+#### db.properties
+
+```properties
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql:///本地数据库名
+username=root
+password=admin
+```
+
+#### log4j.properties
+
+```properties
+# Global logging configuration
+log4j.rootLogger=ERROR, stdout
+# MyBatis logging configuration...
+log4j.logger.项目模块路径=TRACE
+# Console output...
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%5p [%t] - %m%n
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3540,6 +4049,56 @@ web最佳开发模式
 - 而通过原始数据映射之后得到的二进制值串就是哈希值
 
 
+
+### IDEA个人习惯
+
+#### 设置不同方法分割线
+
+![image-20200901165447364](img/image-20200901165447364.png)
+
+
+
+## 插件/设置
+
+### IDEA连接数据库
+
+![image-20200901172143435](img/image-20200901172143435.png)
+
+
+
+### 查看项目运行中具体执行的MySQL语句
+
+可以直接看到实际执行的sql语句
+
+#### 下载安装插件
+
+
+
+![image-20200901172318420](img/image-20200901172318420.png)
+
+#### 启用插件
+
+![image-20200901172456319](img/image-20200901172456319.png)
+
+
+
+## Typora设置
+
+### 高亮
+
+#### 颜色修改
+
+对应主题css文件最后添加
+
+```css
+mark {    background: #a9d18e; }
+```
+
+
+
+#### 高亮快捷键
+
+![image-20200903210438467](img/image-20200903210438467.png)
 
 
 
